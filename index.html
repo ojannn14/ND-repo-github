@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎂 Selamat Ulang Tahun</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    overflow-x:hidden;
+    overflow-y:auto;
+    text-align:center;
+    padding:20px;
+}
+
+/* JUDUL */
+h1{
+    font-size:clamp(2rem,5vw,4rem);
+    color:white;
+    text-shadow:0 4px 10px rgba(0,0,0,0.3);
+    font-family:'Dancing Script', cursive;
+    white-space:nowrap;
+    margin-bottom:10px;
+}
+
+/* NAMA */
+.name{
+    font-size:clamp(2.5rem,7vw,5rem);
+    font-weight:bold;
+    background:linear-gradient(45deg,#fff,#ffeaa7,#ffd700);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    white-space:nowrap;
+    margin-bottom:30px;
+}
+
+/* KUE */
+.cake{
+    position:relative;
+    width:300px;
+    height:250px;
+    margin-bottom:30px;
+}
+
+.layer{
+    position:absolute;
+    height:60px;
+    border-radius:20px;
+    animation:bounce 2s infinite;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.layer1{
+    width:280px;
+    background:#74b9ff;
+    top:0;
+    left:10px;
+}
+
+.layer2{
+    width:240px;
+    background:#ffeaa7;
+    top:80px;
+    left:30px;
+}
+
+.layer3{
+    width:200px;
+    background:#ff7675;
+    top:160px;
+    left:50px;
+}
+
+/* LILIN */
+.candle{
+    position:absolute;
+    width:10px;
+    height:40px;
+    background:#fdcb6e;
+    top:-35px;
+    border-radius:5px;
+}
+
+.candle::before{
+    content:'';
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:#f1c40f;
+    border-radius:50%;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    box-shadow:0 0 20px #f1c40f;
+    animation:flicker .4s infinite;
+}
+
+.c1{left:120px;}
+.c2{left:145px;}
+.c3{left:170px;}
+
+/* PESAN */
+.msg{
+    background:rgba(255,255,255,0.9);
+    padding:25px;
+    border-radius:25px;
+    font-size:1.3rem;
+    max-width:600px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    line-height:1.7;
+}
+
+/* TOMBOL */
+button{
+    margin-top:25px;
+    border:none;
+    padding:15px 25px;
+    border-radius:50px;
+    font-size:1rem;
+    cursor:pointer;
+    background:white;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* ANIMASI */
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+@keyframes flicker{
+    0%,100%{
+        transform:translateX(-50%) scale(1);
+    }
+    50%{
+        transform:translateX(-50%) scale(1.2);
+    }
+}
+
+/* CONFETTI */
+.confetti{
+    position:absolute;
+    width:10px;
+    height:10px;
+    background:red;
+    top:-10px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎉 SELAMAT ULANG TAHUN 🎉</h1>
+<div class="name">NADIA ANANDA</div>
+
+<div class="cake">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer layer3"></div>
+
+    <div class="candle c1"></div>
+    <div class="candle c2"></div>
+    <div class="candle c3"></div>
+</div>
+
+<div class="msg">
+    🎂 Semoga apa yang diharapkan segera datang, di sesi kehidupan yang ke 19 tahun ini tetap menjadi
+    orang yang selalu berbuat baik, senyumanmu selalu lebar, ga sendirian lagi, uangya banyak, dikelilingi orang baik,
+    nasimu selalu enak, ketawa mu selalu keras, ubi cilembunya selalu manis, dan mekarlah seperti bunga favoritmu yang cantik ituuuuuuuuuuuu.
+    doanya tambah mandiri yaaaaa ✨
+</div>
+
+<button id="playBtn">▶️ Putar Musik</button>
+
+<!-- AUDIO -->
+<audio id="music" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("music");
+const playBtn = document.getElementById("playBtn");
+
+/*
+    AUTO PLAY LEBIH STABIL
+    Browser HP modern biasanya tetap butuh interaksi user.
+    Jadi musik otomatis dicoba saat halaman dibuka,
+    lalu fallback ke tombol jika gagal.
+*/
+
+window.addEventListener("load", async () => {
+    try{
+        await music.play();
+        playBtn.style.display = "none";
+    }catch(err){
+        console.log("Autoplay diblokir browser");
+    }
+});
+
+/* FALLBACK MANUAL */
+playBtn.addEventListener("click", async () => {
+    try{
+        await music.play();
+        playBtn.style.display = "none";
+    }catch(err){
+        alert("Browser masih memblokir audio");
+    }
+});
+
+/* CONFETTI */
+function createConfetti(){
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.background =
+    `hsl(${Math.random()*360},100%,50%)`;
+
+    confetti.style.animationDuration =
+        (Math.random()*3 + 2) + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(()=>{
+        confetti.remove();
+    },5000);
+}
+
+setInterval(createConfetti,200);
+</script>
+
+</body>
+</html>
